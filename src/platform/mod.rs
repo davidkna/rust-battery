@@ -30,8 +30,11 @@ cfg_if! {
         pub type Iterator = netbsd::SysMonIterator;
         pub type Device = netbsd::SysMonDevice;
     } else {
-        compile_error!("Support for this target OS is not implemented yet!\n \
-            You may want to create an issue: https://github.com/starship/rust-battery/issues/new");
+        mod fallback;
+
+        pub type Manager = fallback::FallbackManager;
+        pub type Iterator = fallback::FallbackIterator;
+        pub type Device = fallback::FallbackDevice;
     }
 }
 

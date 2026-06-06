@@ -32,6 +32,17 @@ impl Error {
     }
 
     #[allow(unused)]
+    pub(crate) fn unsupported<T>(description: T) -> Error
+    where
+        T: Into<Cow<'static, str>>,
+    {
+        Error {
+            source: io::Error::from(io::ErrorKind::Unsupported),
+            description: Some(description.into()),
+        }
+    }
+
+    #[allow(unused)]
     pub(crate) fn not_found<T>(description: T) -> Error
     where
         T: Into<Cow<'static, str>>,
